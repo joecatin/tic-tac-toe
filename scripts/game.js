@@ -35,12 +35,17 @@ const play = (e) => {
         else return gameover(userMove);
     }; 
 
-
-    let botMove = Gameboard.botPlays(false);
-    if (botMove) { 
-        if (botMove === "busy") return false;
-        else return gameover(botMove);
-    };
+    let botMove = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(Gameboard.botPlays(false))
+        }, 250);
+    });
+    botMove.then(result => {
+        if (result) { 
+            if (result === "busy") return false;
+            else return gameover(botMove);
+        };
+    })
 
     return true;
 }
