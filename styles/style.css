@@ -1,0 +1,64 @@
+:root {
+    --brown-dark: #a16a4a;
+    --beige: #ffc49c;
+    --beige-light: #fee1cd;
+    --blue-light: #eef1f4;
+    --blue-dark: #66798f;
+    --green: #81c784;
+    --red: #ff8a80;
+  }
+
+#gameboard-container {
+    position: relative;
+    margin: 10vh 30vw 0vh;
+    height: 70vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows:  1fr 1fr 1fr;
+    column-gap: 1vw;
+    row-gap: 1vh;
+}
+
+#reset-container {
+    position: relative;
+    margin: 0vh 30vw;
+    height: 10vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+#reset-container img{
+    height: 10vh;
+}
+
+.cell {
+    box-sizing: border-box;
+    width: 100%;
+    height: 20vh;
+    border-bottom: 3px solid var(--beige-light);
+    border-right: 3px dashed var(--beige-light);
+    border-radius: 15px;
+    /* transition: all .2s ease; */
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+.cell img{
+    position: relative;
+    margin: auto;
+    height: 15vh;
+}
+
+.win {
+    animation-duration: 0.1s;
+    animation-name: scale;
+    animation-iteration-count: 4;
+    animation-direction: alternate;
+}
+
+@keyframes scale {
+    from { transform: scale(1.0); }
+    to { transform: scale(1.05); }
+}
