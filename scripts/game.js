@@ -1,8 +1,16 @@
 import { Gameboard } from "./gameboard.js";
 
+let smart = true;
+
+const toggleMode = () => {
+    smart = (smart)? false : true;
+    const mode = document.getElementById("mode");
+    mode.src = `assets/${(smart)? "random" : "smart"}.png`;
+}
+
 const gameTied = () => {
     let cells = document.querySelectorAll(".cell");
-    cells.classList.add("win");
+    cells.forEach(cell => { cell.classList.add("win"); });    
     return true;
 }
 
@@ -15,7 +23,7 @@ const gameWon = (cells) => {
 }
 
 const gameover = (outcome) => {
-    if (outcome === "tie") gameTied();
+    if (outcome === "tied") gameTied();
     else gameWon(outcome);
 
     let cells = document.querySelectorAll(".cell");
@@ -35,17 +43,27 @@ const play = (e) => {
         else return gameover(userMove);
     }; 
 
+    // if (smart) {
+    //     let botMove = Gameboard.botPlays({ smart: true });
+    //     if (botMove) gameover(botMove);
+    // } else {
+    //     let botMove = new Promise((resolve, reject) => {
+    //         setTimeout(() => {
+    //             resolve(Gameboard.botPlays(smart))
+    //         }, 250);
+    //     });
+    //     botMove.then(result => {
+    //         if (result) gameover(result);
+    //     }).catch(error => console.log(error))
+    // }    
     let botMove = new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve(Gameboard.botPlays(false))
+            resolve(Gameboard.botPlays(smart))
         }, 250);
     });
     botMove.then(result => {
-        if (result) { 
-            if (result === "busy") return false;
-            else return gameover(botMove);
-        };
-    })
+        if (result) gameover(result);
+    }).catch(error => console.log(error))
 
     return true;
 }
@@ -57,8 +75,10 @@ const flush = () => {
         cell.addEventListener("click", play); 
         cell.classList.remove("win");
     });
+    // Gameboard.botPlays({ smart: smart });
     return true
 }
+
 
 const reset = (e) => {
     if (e) {
@@ -68,4 +88,4 @@ const reset = (e) => {
     } else return flush();       
 }
 
-export { reset };
+export { reset, smart, toggleMode };

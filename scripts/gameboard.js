@@ -5,7 +5,7 @@ const isCombinationWon = arr => {
 
 const Gameboard = (() => {
     let board = {
-        1: "tic", 2: "", 3: "",
+        1: "", 2: "", 3: "",
         4: "", 5: "", 6: "",
         7: "", 8: "", 9: ""
     };
@@ -54,17 +54,20 @@ const Gameboard = (() => {
         if (outcomes.length > 0) return outcomes[0]; else return false
     }
 
-    const isGameTied = () => {
-        let won = isGameWon();
+    const isGameTied = (won) => {
         let full = isBoardFull();
         return (won)? false : (full)? "tied" : false;
     }
 
     const isGameOver = () => {
         let won = isGameWon();
-        let tied = isGameTied();
+        let tied = isGameTied(won);
         if (won || tied) return [won, tied].filter(Boolean)[0];
         else return false
+    }
+
+    const whoWonGame = (winningCombination) => {
+        return board[winningCombination[0]];
     }
 
     const move = (colour, index) => {
@@ -85,6 +88,59 @@ const Gameboard = (() => {
         } else return false;
     }
 
+    const botPlaysSmart = () => {
+        let bestScore = -Infinity;
+        let bestMove = 0;
+
+        for (const key in board) {
+            if (board[key] === "") {
+                board[key] = "tac";
+                let score = minimax(false);
+                board[key] = "";
+                if (score > bestScore) {bestScore = score; bestMove = key}
+            }
+        };
+        move("tac", bestMove);   
+        return isGameOver();     
+    }
+
+ 
+    const minimax = (max) => {
+        // return 1;
+        let outcome = isGameOver();
+        if (outcome){
+            if (Array.isArray(outcome)) {
+                let winner = whoWonGame(outcome);
+                if (winner === "tac") return 1;
+                else if (winner === "tic") return -1;
+            } else if (outcome === "tied") return 0;
+        }
+        
+        if (max) {
+            let bestScore = -Infinity;
+            for (const key in board) {
+                if (board[key] === "") {
+                    board[key] = "tac";
+                    let score = minimax(false);
+                    board[key] = "";
+                    bestScore = Math.max(score, bestScore);
+                }
+            }
+            return bestScore;
+        } else {
+            let bestScore = Infinity;
+            for (const key in board) {
+                if (board[key] === "") {
+                    board[key] = "tic";
+                    let score = minimax(true);
+                    board[key] = "";
+                    bestScore = Math.min(score, bestScore);
+                }
+            }
+            return bestScore;
+        }
+    }
+
     const userPlays = (index) => { 
         let outcome = move("tic", index);
         if (outcome === "busy") return outcome;
@@ -97,7 +153,7 @@ const Gameboard = (() => {
     }
 
     return {userPlays, botPlays, isGameOver, reset};
-    
+
 })();
 
 export {Gameboard};

@@ -24,12 +24,12 @@
     margin: 0vh 30vw;
     height: 10vh;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: flex-start;
 }
 
 #reset-container img{
-    height: 10vh;
+    height: 7vh;
 }
 
 .cell {
