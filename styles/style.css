@@ -2,6 +2,7 @@
     --brown-dark: #a16a4a;
     --beige: #ffc49c;
     --beige-light: #fee1cd;
+    --beige-light-opacity: rgba(254,225,205, 0.75);
     --blue-light: #eef1f4;
     --blue-dark: #66798f;
     --green: #81c784;
@@ -36,8 +37,9 @@
     box-sizing: border-box;
     width: 100%;
     height: 20vh;
-    border-bottom: 3px solid var(--beige-light);
-    border-right: 3px dashed var(--beige-light);
+    /* border-bottom: 3px solid var(--beige-light);
+    border-right: 3px dashed var(--beige-light); */
+    box-shadow: 3px 3px 5px 1px var(--beige-light-opacity);
     border-radius: 15px;
     /* transition: all .2s ease; */
     display: flex;
