@@ -1,5 +1,4 @@
 import { reset, smart, toggleMode } from "./game.js";
-// import { Gameboard } from "./gameboard.js";
 
 document.querySelector("body").addEventListener("click", reset);
 const resetButton = document.getElementById("reset");
@@ -11,4 +10,3 @@ mode.src = `assets/${(smart)? "random" : "smart"}.png`;
 mode.addEventListener("click", toggleMode);
 
 reset();
-// Gameboard.botPlays({ smart: true });

@@ -1,6 +1,6 @@
 import { Gameboard } from "./gameboard.js";
 
-let smart = true;
+let smart = false;
 
 const toggleMode = () => {
     smart = (smart)? false : true;
@@ -43,19 +43,6 @@ const play = (e) => {
         else return gameover(userMove);
     }; 
 
-    // if (smart) {
-    //     let botMove = Gameboard.botPlays({ smart: true });
-    //     if (botMove) gameover(botMove);
-    // } else {
-    //     let botMove = new Promise((resolve, reject) => {
-    //         setTimeout(() => {
-    //             resolve(Gameboard.botPlays(smart))
-    //         }, 250);
-    //     });
-    //     botMove.then(result => {
-    //         if (result) gameover(result);
-    //     }).catch(error => console.log(error))
-    // }    
     let botMove = new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(Gameboard.botPlays(smart))
@@ -75,7 +62,6 @@ const flush = () => {
         cell.addEventListener("click", play); 
         cell.classList.remove("win");
     });
-    // Gameboard.botPlays({ smart: smart });
     return true
 }
 

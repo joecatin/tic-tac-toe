@@ -106,7 +106,6 @@ const Gameboard = (() => {
 
  
     const minimax = (max) => {
-        // return 1;
         let outcome = isGameOver();
         if (outcome){
             if (Array.isArray(outcome)) {
